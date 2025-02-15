@@ -1,23 +1,23 @@
-import { useEffect } from 'react';
-import s from './Modal.module.css';
-const Modal = ({ children, title = 'Default modal', closeModal }) => {
-  const handleBackdropClick = e => {
+import { useEffect } from "react";
+import s from "./Modal.module.css";
+const Modal = ({ children, title = "Default modal", closeModal }) => {
+  const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       closeModal();
     }
   };
 
   useEffect(() => {
-    const handleKeyDown = e => {
-      if (e.key === 'Escape') {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
         closeModal();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [closeModal]);
   return (
