@@ -1,19 +1,38 @@
 import { useDispatch } from "react-redux";
 import s from "./TodoList.module.css";
 import { FaStar } from "react-icons/fa";
-import { deleteTodo } from "../../redux/counter/todoSlice";
+import { deleteTodo, editTodo } from "../../redux/counter/todoSlice";
+import { useState } from "react";
 
 const Item = ({ isCompleted, todo, id, isFavorite }) => {
   const dispatch = useDispatch();
+  const [editMode, setEditMode] = useState(false);
+  const [value, setValue] = useState("");
   return (
     <li className={s.item}>
       <input type="checkbox" checked={isCompleted} />
       <p>
-        {isFavorite && <FaStar color="gold" />} {todo}
+        {editMode ? (
+          <div>
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onBlur={() => {
+                dispatch(editTodo({ id, todo: value }));
+                setEditMode(false);
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            {isFavorite && <FaStar color="gold" />} {todo}
+          </>
+        )}
       </p>
       <div>
         <button>{isFavorite ? "Dislike" : "Like"}</button>
-        <button>Edit</button>
+        <button onClick={() => setEditMode(true)}>Edit</button>
         <button onClick={() => dispatch(deleteTodo(id))}>Delete</button>
       </div>
     </li>

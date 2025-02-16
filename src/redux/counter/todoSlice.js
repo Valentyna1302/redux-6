@@ -14,8 +14,12 @@ const slice = createSlice({
     addTodo: (state, action) => {
       state.items.push(action.payload);
     },
+    editTodo: (state, action) => {
+      const item = state.items.find((item) => item.id === action.payload.id);
+      item.todo = action.payload.todo;
+    },
   },
 });
 
 export const todoReducer = slice.reducer;
-export const { deleteTodo, addTodo } = slice.actions;
+export const { deleteTodo, addTodo, editTodo } = slice.actions;
